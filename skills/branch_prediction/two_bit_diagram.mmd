@@ -1,0 +1,17 @@
+graph LR
+    subgraph Taken
+        WT((WT))
+        T((T))
+    end
+    subgraph Not_Taken
+        WNT((WNT))
+        NT((NT))
+    end
+WT --> |0| Not_Taken
+WNT --> |1| Taken
+WNT --> |0| NT
+NT --> |1| WNT
+NT --> |0| NT
+WT --> |1| T
+T --> |0| WT
+T --> |1| T
