@@ -1,0 +1,10 @@
+graph LR
+    I((Invalid)) -- Read Miss --> S((Shared))
+    S -- Read Hit --> S
+    S -- Read Miss --> S
+    S -- Write / Invalidate --> M
+    S -- Write Miss --> M
+    M((Modified)) -- Read Miss --> S
+    I -- Write Miss --> M
+    M -- Write / Read Hit --> M
+    M -- Write Miss --> M
