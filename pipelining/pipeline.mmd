@@ -1,0 +1,72 @@
+flowchart BT
+    subgraph FETCH
+        direction BT
+        subgraph Instruction_Memory
+        direction BT
+        end
+        PC_Reg[PC] ==> Instruction_Memory
+        Instruction_Memory --> icode((icode))
+        Instruction_Memory --> ifun((ifun))
+        Instruction_Memory --> rA((rA))
+        Instruction_Memory --> rB((rB))
+        Instruction_Memory ==> valC((valC))
+        PC_Reg[PC] ==> FETCH_PC[PC Increment] --> valP((valP))
+    end
+    subgraph DECODE
+    direction BT
+        subgraph REGISTER_FILE
+        direction RL
+        end
+        REGISTER_FILE ==> valA((valA))
+        REGISTER_FILE ==> valB((valB))
+        dstE_block(dstE) --> dstE_bub((dstE))
+        dstM(dstM) --> dstM_bub((dstM))
+        srcA(srcA) --> srcA_bub((srcA))
+        srcB(srcB) --> srcB_bub((srcB))
+
+    end
+    subgraph EXECUTE
+        direction BT
+        subgraph ALU_LR
+        direction RL
+            ALU_fun(ALU fun.) --> ALU[/ ALU \] --> CC
+        end
+        ALU ==> valE((valE))
+        valE ==> REGISTER_FILE
+        CC -.-> Cnd((Cnd))
+        valC ==> ALU_A(ALU_A) --> ALU
+        valA ==> ALU_A
+        valB ==> ALU_B(ALU_B) --> ALU
+        Cnd  -.-> dstE_block
+    end
+    subgraph MEMORY
+        direction BT
+        MEM_CONTROL --> |read| DATA_MEMORY
+        MEM_CONTROL --> |write| DATA_MEMORY
+        subgraph DATA_MEMORY
+            direction LR
+        end
+        DATA_MEMORY --> |data_out| valM((valM))
+        valM ==> REGISTER_FILE
+        ADDR(ADDR) ==> DATA_MEMORY[DATA_MEMORY]
+        DATA(DATA) ==> DATA_MEMORY
+        valA ==> ADDR
+        valA ==> DATA
+        valE ==> ADDR
+        valP ==> DATA
+    end
+    subgraph PC
+        direction BT
+        NEW_PC(New PC) ==> newPC((newPC))
+        newPC ==> PC_Reg
+        icode --> NEW_PC
+        valC ==> NEW_PC
+        Cnd -.-> NEW_PC
+        valM ==> NEW_PC
+        valP ==> NEW_PC
+        stat(stat)
+        Instruction_Memory --> |"instr_valid imem_err"| stat
+        icode --> stat
+        DATA_MEMORY -.-> |dmem_err| stat
+        stat --> Stat((Stat))
+    end
