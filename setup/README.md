@@ -1,7 +1,8 @@
 # Setup Project   
 To prove a successful verilator and cocotb setup, run the example from the README:   
-- [https://github.com/cocotb/cocotb](https://github.com/cocotb/cocotb)   
-   
+- [https://github.com/cocotb/cocotb](https://github.com/cocotb/cocotb)
+- `make SIM=verilator`
+
 Verilator: Version 5.016   
 ```
 FROM python:3.9.18
