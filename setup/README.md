@@ -3,8 +3,11 @@ To prove a successful verilator and cocotb setup, run the example from the READM
 - [https://github.com/cocotb/cocotb](https://github.com/cocotb/cocotb)
 - `make SIM=verilator`
 
-Verilator: Version 5.016   
-```
+Verilator: Version 5.016
+
+The following `Dockerfile` was originally used with this
+[Makefile](https://github.com/chiranthsiddappa/caf_verilog/blob/main/Makefile).
+``` Dockerfile
 FROM python:3.9.18
 
 COPY --from=verilator/verilator:v5.016 /usr/local/bin /usr/local/bin
@@ -50,7 +53,7 @@ pip install numpy==1.26.* matplotlib jupyterlab pymap3d
 ```
 If you ran the `venv`  step above, make sure that your virtual environment is active.   
 To show a completed setup, run the following:   
-```
+```python
 import numpy as np
 
 np.show_config()
