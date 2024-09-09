@@ -1,0 +1,204 @@
+\section{Introduction}
+\begin{frame}{Introduction}
+  \begin{itemize}
+  \item How do we represent fractional numbers?
+  \item What is a fraction?
+  \item What numbers require fractions?
+  \item Real Numbers:
+    \begin{itemize}
+    \item Rational
+    \item Integers
+    \item Whole
+    \item Natural
+    \end{itemize}
+  \item What about irrational numbers?
+  \end{itemize}
+\end{frame}
+\begin{frame}{Introduction}
+  \begin{itemize}
+  \item Speed of light: 299,792,458 m/s vs. 3e8 m/s
+  \item Number of views: 1,000,000,000,001 vs. 1e12 vs. nan
+  \item $\pi$
+  \end{itemize}
+\end{frame}
+\begin{frame}{Introduction}
+  \begin{itemize}
+  \item Given a byte of data, assign a decimal.
+  \item What is the value $1001.1001_{2}$?
+  \end{itemize}
+  \begin{equation}
+    \sum_{n=-4}^{3} b_{n}*2^{n}
+  \end{equation}
+\end{frame}
+% Provide worked out solution
+\begin{frame}{Introduction}
+  \begin{itemize}
+  \item $1 * 2^{3}$
+  \item $0 * 2^{2}$
+  \item $0 * 2^{1}$
+  \item $1 * 2^{1}$
+  \item $1 * 2^{-1}$
+  \item $0 * 2^{-2}$
+  \item $0 * 2^{-3}$
+  \item $1 * 2^{-4}$
+    \item $9.5625_{10}$
+  \end{itemize}
+\end{frame}
+\section{IEEE-754}
+\begin{frame}{IEEE-754}
+  \begin{itemize}
+  \item Before: Fixed point, custom number of bits
+  \item Replacement for Radix Independent Floating Point Arithmetic
+  \item General and Scientific computing collaboration
+    \begin{itemize}
+    \item Hardware Realizable vs. Scientific Ideal
+    \item Examples: Large numbers / Small constants in Physics
+    \end{itemize}
+  \item Standards for rounding, overflow, and underflow
+  \end{itemize}
+\end{frame}
+\begin{frame}{Floating Point Representation}
+  \begin{itemize}
+  \item Numerical Form:
+    \begin{equation}
+      (-1)^{s} * M * 2^{e}
+    \end{equation}
+    \begin{itemize}
+    \item \textbf{Sign Bit} \emph{s} Defines whether the number is positive or negative
+    \item \textbf{Significand} \emph{M} a fractional value \emph{normally} in
+      the range $[1.0, 2.0)$
+      \item \textbf{Exponent} \emph{e} weights value by power of two
+    \end{itemize}
+  \item Encoding: \\
+    \begin{tabular}{|l|l|l|}
+      \hline
+      s & exp & frac\\
+      \hline
+    \end{tabular}
+    \begin{itemize}
+    \item Requires a bias
+    \item \textbf{exp} field \emph{encodes} \textbf{E} (but is not equal to E)
+    \item \textbf{frac} field \emph{encodes} \textbf{M} (but is not equal to M)
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+\begin{frame}{IEEE-754 Precision}
+  \begin{itemize}
+    \item Definition: \\
+  \begin{tabular}{|l|l|l|l|}
+    \hline
+    Definition & s & exp     & frac    \\ \hline
+    32-bit     & 1 & 8-bits  & 23-bits \\ \hline
+    64-bit     & 1 & 11-bits & 52-bits \\ \hline
+  \end{tabular}
+\item Zero Example: \\
+    \begin{tabular}{|l|l|l|l|}
+    \hline
+    Definition & s & exp         & frac    \\ \hline
+    32-bit     & 1 & 00000000    & 00000000000000000000000 \\ \hline
+    64-bit     & 1 & 00000000000 & 000000000000000000000...0 \\ \hline
+  \end{tabular}
+  \end{itemize}
+\end{frame}
+\begin{frame}{Fraction Example}
+  Convert the fractional value $0.875$ to binary:
+\end{frame}
+\begin{frame}{Fraction Example}
+    \begin{itemize}
+    \item $2^{-1}: 0.875 * 2 = 1.75$
+    \item $2^{-2}: 0.75 * 2 = 1.5$
+    \item $2^{-3}: 0.5 * 2 = 1.0$
+      \item $0.111_{2}$
+  \end{itemize}
+\end{frame}
+\begin{frame}{Bias}
+    \begin{tabular}{|l|l|l|}
+    \hline
+    Definition & exp     & bias \\ \hline
+    32-bit     & 8-bits  & 127  \\ \hline
+    64-bit     & 11-bits & 1023 \\ \hline
+  \end{tabular}
+\end{frame}
+\begin{frame}{Normalized Values}
+  \begin{itemize}
+  \item $exp \ne 000.0$ and $exp \ne 111.1$
+  \item Exponent coded as biased value:
+    \begin{equation}
+      E = exp - bias
+    \end{equation}
+  \item \textbf{exp}: unsigned value of exp field
+  \item \textbf{bias}: $2^{k-1} -1 $ where k is the number of bits in the exp
+    field
+      \begin{itemize}
+      \item Single precision: 127
+        \begin{itemize}
+        \item exp: 1..254
+        \item E: -126-127
+        \end{itemize}
+      \item Double precision: 1023
+        \begin{itemize}
+        \item exp: 1..2046
+        \item E: -1022..1023
+        \end{itemize}
+      \end{itemize}
+    \item Significand with leading $1_2$: $1.xxx..x_{2}$
+      \begin{itemize}
+      \item Leading bit for \emph{free}
+      \item Min: $frac = 000.0$; $M = 1.0$
+      \item Max: $frac = 111.1$; $M = 2.0 - \epsilon$
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+\begin{frame}{Normalization Steps}
+  \begin{enumerate}
+  \item Fixed point binary representation around 0
+    \begin{itemize}
+    \item Convert the fractional portion via multiplication
+    \end{itemize}
+  \item Normalize the binary number to be of the form $1.xxxe\#\#$
+    \begin{itemize}
+    \item Keep track of the number of shifts required to move decimal
+    \end{itemize}
+  \item Apply bias to the exponent to find $exp$
+  \item Convert $exp$ to binary
+  \item Store values, including the sign bit
+  \end{enumerate}
+\end{frame}
+\begin{frame}{Denormalized Values}
+  \begin{itemize}
+  \item $exp = 000.0$
+  \item Exponent value: $E = 1 - bias$
+  \item Significand begins with implied 0: $0.xxx_{2}$
+  \item Cases:
+    \begin{itemize}
+    \item $exp = 000.0$; $frac = 000.0$
+      \begin{itemize}
+      \item Represents the value 0
+      \item Remember sign bit?: $+0$ and $-0$
+      \end{itemize}
+    \item $exp = 000.0$; $frac \ne 000.0$
+      \begin{itemize}
+      \item Values close to zero
+      \item Equispaced
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+\begin{frame}{Special Definitions}
+  \begin{itemize}
+  \item Where $exp = 111.1$
+  \item $exp = 111.1$; $frac = 000.0$
+    \begin{itemize}
+    \item Represent $\inf$
+    \item When an operation overflows
+    \item Both a positive and negative
+    \item Examples: $1.0 / 0.0 = -1.0 / -0.0 = +\infty$, $1.0 / -0.0 = -\infty$
+    \end{itemize}
+  \item $exp = 111.1$, $frac \ne 000.0$
+    \begin{itemize}
+    \item Not a Number (Nan)
+    \item No numeric representation can be determined
+    \item Examples: $\sqrt{-1}$, $\infty - \infty$, $\infty * x_{10}$
+    \end{itemize}
+  \end{itemize}
+\end{frame}
