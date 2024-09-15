@@ -13,6 +13,16 @@ This allows for make to handle passing the parameters and build arguments to doc
 make
 ```
 
+Recommended run options:
+
+* `-v`: Host volume mounted into container
+* `--net=host`: Provide all ports to the container
+* `-p`: Expose a container port to the host (recommended)
+
+```bash
+docker run -it -v /path/on/host:/home/$USER/cs4200 -p 8888:8888 cs4200 /bin/bash
+```
+
 ### Python Requirements   
 I recommend using a virtual environment specifically for this course.
 The docker image built from above will contain these dependencies.   
@@ -21,7 +31,7 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 If you are on an Intel/AMD CPU, please install this version of numpy, otherwise remove the `-i`  or run only the second line.   
-```
+```bash
 pip install -i https://pypi.anaconda.org/intel/simple numpy==1.26.*
 pip install numpy==1.26.* matplotlib jupyterlab pymap3d
 ```
@@ -31,6 +41,15 @@ To show a completed setup, run the following:
 import numpy as np
 
 np.show_config()
+```
+
+## VM
+
+The `Vagrantfile` was tested with major version 2 for vagrant, and version `7.0` for virtualbox.
+
+```bash
+vagrant up
+vagrant ssh
 ```
 
 ## Incline
