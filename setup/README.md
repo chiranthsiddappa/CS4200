@@ -52,6 +52,8 @@ vagrant up
 vagrant ssh
 ```
 
+More notes on accessing the virtual machine ports can be found [here](https://github.com/chiranthsiddappa/CS2080/tree/main/vm).
+
 ## Incline
 
 ```bash
