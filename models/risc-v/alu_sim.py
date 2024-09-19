@@ -1,8 +1,21 @@
+from enum import Enum
 import os
 
 from cocotb.runner import get_runner
 
 alu_sim_dir = os.path.abspath(os.path.join('.', 'alu_sim_dir'))
+
+class Funct3(Enum):
+    ADD = 0
+    SLL = 1
+    SLT = 2
+    SLTU = 3
+    XOR = 4
+    SRL = 5
+    SRA = 5
+    OR = 6
+    AND = 7
+
 
 def test_via_cocotb():
     """
