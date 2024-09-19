@@ -6,6 +6,9 @@ sim_build/
 
 # Python
 __pycache__/
+venv/
+.idea/
+.ipynb_checkpoints/
 
 # Logs
 logs
