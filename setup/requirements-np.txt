@@ -1,0 +1,2 @@
+-i https://pypi.anaconda.org/intel/simple
+numpy==1.26.*

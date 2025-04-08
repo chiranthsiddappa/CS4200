@@ -1,0 +1,13 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "generic/ubuntu2204"
+  config.vm.box_version = "4.3.6"
+  config.vm.provision "shell", path: "cs4200_install.sh"
+  config.vm.provision "shell", privileged: false, path: "python_setup.sh"
+
+  # Uncomment this block for a gui
+#  config.vm.provider "virtualbox" do |vb|
+#    # Display the VirtualBox GUI when booting the machine
+#    vb.gui = true
+#  end
+
+end
