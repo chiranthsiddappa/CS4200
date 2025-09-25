@@ -7,8 +7,8 @@ module RISC_REGISTER_FILE(input             clk,
                           input [4:0]       rd,
                           input [31:0]      rd_data,
                           input             write_enable,
-                          output reg [31:0] rs1_data,
-                          output reg [31:0] rs2_data
+                          output [31:0] rs1_data,
+                          output [31:0] rs2_data
                           );
 
    reg [31:0] register_file [0:31];
@@ -17,12 +17,8 @@ module RISC_REGISTER_FILE(input             clk,
       register_file[0] = 32'b0;
    end
 
-   always @(posedge clk) begin
-      if (read_enable) begin
-         rs1_data <= register_file[rs1];
-         rs2_data <= register_file[rs2];
-      end
-   end
+   assign rs1_data = (read_enable && rs1 != 5'b0) ? register_file[rs1] : 32'b0;
+   assign rs2_data = (read_enable && rs2 != 5'b0) ? register_file[rs2] : 32'b0;
 
    always @(posedge clk) begin
       if (write_enable) begin

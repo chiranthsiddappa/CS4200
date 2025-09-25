@@ -11,7 +11,7 @@ register_file_sim_dir = os.path.abspath(os.path.join('.', 'register_file_sim_dir
 
 @cocotb.test()
 async def run_register_file_sim(dut):
-    clock = Clock(dut.clk, period=10, units='ns') # This assigns the clock into the register file
+    clock = Clock(dut.clk, period=10, units='ns')  # This assigns the clock into the register file
 
     cocotb.start_soon(clock.start(start_high=False))
 
@@ -45,7 +45,6 @@ async def run_register_file_sim(dut):
     rs1_values.append(int(dut.rs1_data.value))
     rs2_values.append(int(dut.rs2_data.value))
 
-
     await RisingEdge(dut.clk)
     dut.write_enable.value = 0
     dut.read_enable.value = 0
@@ -56,9 +55,10 @@ async def run_register_file_sim(dut):
     rs1_values.append(int(dut.rs1_data.value))
     rs2_values.append(int(dut.rs2_data.value))
 
-    for ii in range(32): # Note the delay in the results of two clock cycles
-        assert rs1_values[ii + 2] == ii
-        assert rs2_values[ii + 2] == ii
+    for ii in range(32):  # Note the delay in the results of one clock cycle
+        assert rs1_values[ii + 1] == ii
+        assert rs2_values[ii + 1] == ii
+
 
 def test_via_cocotb():
     """
@@ -74,6 +74,7 @@ def test_via_cocotb():
         build_dir=register_file_sim_dir,
     )
     runner.test(hdl_toplevel="RISC_REGISTER_FILE", test_module="register_file_sim")
+
 
 if __name__ == '__main__':
     test_via_cocotb()
