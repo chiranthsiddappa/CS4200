@@ -11,10 +11,10 @@ RUN apt-get update \
 
 ARG developer
 ARG uid
-ENV developer $developer
-ENV uid $uid
+ENV developer=$developer
+ENV uid=$uid
 ARG gid
-ENV gid $gid
+ENV gid=$gid
 
 RUN adduser $developer && \
         usermod -u $uid $developer
@@ -30,4 +30,4 @@ RUN /home/$developer/venv/bin/pip install -r requirements-np.txt
 RUN /home/$developer/venv/bin/pip install -r requirements.txt
 RUN /home/$developer/venv/bin/pip install "cocotb>=1.8,<1.9" "pytest>=7.4,<7.5"
 
-CMD su - $developer
+CMD ["su", "-", "$developer"]
