@@ -30,9 +30,9 @@ module RISCALU(input clk,
           d <= s1 ^ s2;
         5:
           if (funct7 == 7'h20) begin
-             d <= s1 >> s2;
-          end else begin
              d <= $signed(s1) >>> $signed(s2);
+          end else if (funct7 == 7'h00) begin
+             d <= s1 >> s2;
           end
         6:
           d <= s1 | s2;
