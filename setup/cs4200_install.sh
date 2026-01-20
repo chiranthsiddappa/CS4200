@@ -5,7 +5,7 @@ apt-get install -y libfl2 libfl-dev mold
 apt-get install -y perl-doc
 git clone https://github.com/verilator/verilator.git
 pushd verilator
-git checkout v5.016
+git checkout v5.026
 autoconf
 ./configure
 make -j 2
