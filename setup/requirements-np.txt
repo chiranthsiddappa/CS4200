@@ -1,2 +1,2 @@
--i https://pypi.anaconda.org/intel/simple
+-i https://software.repos.intel.com/python/pypi
 numpy==1.26.*

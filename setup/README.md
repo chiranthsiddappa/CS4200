@@ -32,7 +32,7 @@ source venv/bin/activate
 ```
 If you are on an Intel/AMD CPU, please install this version of numpy, otherwise remove the `-i`  or run only the second line.   
 ```bash
-pip install -i https://pypi.anaconda.org/intel/simple numpy==1.26.*
+pip install -i https://software.repos.intel.com/python/pypi numpy==1.26.*
 pip install numpy==1.26.* matplotlib jupyterlab pymap3d
 ```
 If you ran the `venv`  step above, make sure that your virtual environment is active.   

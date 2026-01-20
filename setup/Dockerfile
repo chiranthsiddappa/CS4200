@@ -1,7 +1,7 @@
 FROM python:3.9.18
 
-COPY --from=verilator/verilator:v5.016 /usr/local/bin /usr/local/bin
-COPY --from=verilator/verilator:v5.016 /usr/local/share/verilator /usr/local/share/verilator
+COPY --from=verilator/verilator:v5.026 /usr/local/bin /usr/local/bin
+COPY --from=verilator/verilator:v5.026 /usr/local/share/verilator /usr/local/share/verilator
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive \
@@ -28,6 +28,6 @@ COPY requirements.txt requirements.txt
 RUN python3 -m venv /home/$developer/venv
 RUN /home/$developer/venv/bin/pip install -r requirements-np.txt
 RUN /home/$developer/venv/bin/pip install -r requirements.txt
-RUN /home/$developer/venv/bin/pip install "cocotb>=1.8,<1.9" "pytest>=7.4,<7.5"
+RUN /home/$developer/venv/bin/pip install "cocotb==1.9.2" "pytest>=7.4,<7.5"
 
 CMD ["su", "-", "$developer"]
